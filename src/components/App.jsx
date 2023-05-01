@@ -1,17 +1,19 @@
 import { ContactForm } from './ContactForm/ContactForm';
 import ContactsList from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'redux/contactsSelectors';
-import { addContact, deleteContact, setFilter } from 'redux/contactsSlice';
+import { setFilter } from 'redux/contactsSlice';
 import styled from 'styled-components';
+import { fetchContacts, addContact, deleteContact } from '../redux/operations';
+import { useEffect } from 'react';
 
 export function App() {
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
+  let items = [];
 
   // const [contacts, setContacts] = useState(() => {
   //   const localStorageContacts = localStorage.getItem('contacts');
@@ -50,9 +52,9 @@ export function App() {
   //   localStorage.setItem('contacts', JSON.stringify(contacts));
   // }, [contacts]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('custominput', JSON.stringify(custominput));
-  // }, [custominput]);
+  useEffect(() => {
+    items = dispatch(fetchContacts());
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -65,9 +67,7 @@ export function App() {
       //   ...prevContacts,
       //   { name: USER_NAME, number: USER_NUMBER, id: nanoid() },
       // ]);
-      dispatch(
-        addContact({ name: USER_NAME, number: USER_NUMBER, id: nanoid() })
-      );
+      dispatch(addContact({ name: USER_NAME, phone: USER_NUMBER }));
     } else {
       alert(`${USER_NAME} already in contacts`);
     }
@@ -86,6 +86,7 @@ export function App() {
   };
 
   const changeId = id => {
+    // dispatch(deleteContact(id));
     dispatch(deleteContact(id));
 
     // setContacts(prevContacts =>
@@ -93,7 +94,7 @@ export function App() {
     // );
   };
 
-  const filteredContacts = contacts.filter(el =>
+  const filteredContacts = items.filter(el =>
     el.name.toLowerCase().includes(filter.toLowerCase())
   );
 
