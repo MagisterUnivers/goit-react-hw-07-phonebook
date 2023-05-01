@@ -13,6 +13,7 @@ export function App() {
   const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
+  let items = [];
 
   // const [contacts, setContacts] = useState(() => {
   //   const localStorageContacts = localStorage.getItem('contacts');
@@ -52,8 +53,8 @@ export function App() {
   // }, [contacts]);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    items = dispatch(fetchContacts());
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -93,7 +94,7 @@ export function App() {
     // );
   };
 
-  const filteredContacts = contacts.filter(el =>
+  const filteredContacts = items.filter(el =>
     el.name.toLowerCase().includes(filter.toLowerCase())
   );
 
