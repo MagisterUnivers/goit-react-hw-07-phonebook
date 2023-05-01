@@ -5,7 +5,7 @@ export const ContactsListEl = ({ contacts, changeId }) => {
     return (
       <li key={human.id}>
         <p>
-          {human.name}: {human.number}
+          {human.name}: {human.phone}
         </p>
         <button onClick={() => changeId(human.id)}>Delete</button>
       </li>
@@ -18,7 +18,7 @@ ContactsListEl.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
     })
   ),
   changeId: PropTypes.func.isRequired,
