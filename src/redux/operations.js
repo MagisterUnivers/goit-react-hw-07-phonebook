@@ -39,3 +39,12 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
+
+// fetch('https://connections-api.herokuapp.com/users/signup', {
+//   method: 'POST',
+//   body: JSON.stringify({
+//     name: 'Adrian Cross',
+//     email: 'across@mail.com',
+//     password: 'examplepwd12345',
+//   }),
+// });
